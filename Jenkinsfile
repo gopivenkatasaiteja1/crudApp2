@@ -40,9 +40,10 @@ pipeline {
 
                when {
                     branch 'master'
-                }                steps{
+                }                
+                   steps{
 
-                    script {
+                      script {
                         docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
                             app.push("${env.BUILD_NUMBER}")
                             app.push("latest")
