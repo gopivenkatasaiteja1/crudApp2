@@ -3,6 +3,8 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME = "gopivenkatasaiteja1/crudapp"
         
+
+        
     }
     tools {
      //   jdk 'Java'
@@ -23,7 +25,9 @@ pipeline {
             stage ('Docker Build') {
                 when {
                     branch 'master'
-                } 
+
+                }
+
                 steps {
                     sh 'wget http://172.31.33.68:8081/nexus/service/local/repositories/releases/content/central/crudApp/1.${BUILD_NUMBER}/crudApp-1.${BUILD_NUMBER}.war -O crudApp.war'
                     script {
@@ -33,10 +37,11 @@ pipeline {
                 }
             }
            stage ('Docker Push Image') {
-                when {
+
+               when {
                     branch 'master'
-                } 
-                steps{
+                }                steps{
+
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
                             app.push("${env.BUILD_NUMBER}")
@@ -45,7 +50,5 @@ pipeline {
                     }
                 }
             }
-            
-            
         }
 }
